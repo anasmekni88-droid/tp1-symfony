@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+
 class CategorieController extends AbstractController
 {
     #[Route('/categories', name: 'app_categories')]
@@ -65,5 +66,20 @@ class CategorieController extends AbstractController
         return $this->render('categorie/nouvelle.html.twig', [
             'formulaire' => $form,
         ]);
+    }
+
+    #[Route('/categories/{id}', name: 'app_categorie_show', requirements: ['id' => '\d+'])]
+        public function show(Categorie $categorie): Response
+        {
+            return $this->render('categorie/show.html.twig', [
+                'categorie' => $categorie,
+                'articles' => $categorie->getArticles()
+            ]);
+        }
+    
+    #[Route('/categories/{id}/modifier', name:'app_categorie_modifier', requirements: ['id' => '\d+'])]
+    public function modifier(Categorie $categorie, Request $request, EntityManagerInterface $em) : Response{
+        $form = $this->createForm(CategoryType::class,$categorie);
+        $form = handleRequest($request);
     }
 }
