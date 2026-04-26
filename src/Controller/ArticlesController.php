@@ -10,10 +10,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ArticleRepository;
 use App\Form\ArticleType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class ArticlesController extends AbstractController
 {
 #[Route('/articles/nouveau', name: 'app_article_nouveau')]
+#[IsGranted('ROLE_ADMIN')]
 public function nouveau(Request $request, EntityManagerInterface $em): Response
 {
     $article = new Article();
@@ -40,7 +42,7 @@ public function nouveau(Request $request, EntityManagerInterface $em): Response
 }
 
     #[Route('/articles', name: 'app_articles')]
-public function index(ArticleRepository $articleRepository): Response
+    public function index(ArticleRepository $articleRepository): Response
 {
     $articles = $articleRepository->findAll();
 
