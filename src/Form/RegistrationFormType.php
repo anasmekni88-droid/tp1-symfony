@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType; // This is the core Symfony class
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType; // This is the core Symfony class
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,6 +44,28 @@ class RegistrationFormType extends AbstractType
                         max: 4096,
                     ),
                 ],
+            ])
+            ->add('roles',ChoiceType::class, [
+                'choices' => [
+                    'User' => 'ROLE_USER',
+                    'Admin' => 'ROLE_ADMIN',
+                ],
+                'multiple' => true,   // Tells Symfony to expect an array of values
+                'expanded' => false,  // Set to true if you want checkboxes instead of a dropdown
+            ])
+            ->add('pseudo',TextType::class,[
+                'label' => 'Pseudo',
+                'constraints' => [
+                    new NotBlank(
+                        message: 'Please enter a pseudo',
+                    ),
+                    new Length(
+                        min: 3,
+                        minMessage: 'Your pseudo should be at least {{ limit }} characters',
+                        max: 255,
+                    ),
+                ],
+                
             ])
         ;
     }
