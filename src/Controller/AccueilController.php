@@ -10,12 +10,10 @@ use Symfony\Component\HttpFoundation\Response;
 final class AccueilController extends AbstractController
 {
     #[Route('/accueil', name: 'app_accueil')]
-    public function index(): JsonResponse
+    public function index(): Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/AccueilController.php',
-        ]);
+        // This is the line you need to change:
+        return $this->render('accueil/index.html.twig'); 
     }
     #[Route('/bonjour/{prenom}', name:'app_bonjour')]
     public function bonjour(string $prenom) : Response{
