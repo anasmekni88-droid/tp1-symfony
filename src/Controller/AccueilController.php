@@ -6,14 +6,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 final class AccueilController extends AbstractController
 {
     #[Route('/accueil', name: 'app_accueil')]
-    public function index(): Response
+    public function index(RequestStack $requestStack): Response
     {
-        // This is the line you need to change:
-        return $this->render('accueil/index.html.twig'); 
+        $session = $requestStack->getSession();
+    
+        // Récupérer une donnée
+        $nbVisites = $session->get('nb_visites', 0);
+        
+        // Stocker une donnée
+        $session->set('nb_visites', $nbVisites + 1);
+            return $this->render('accueil/index.html.twig',[
+                'n' => $nbVisites + 1,
+            ]); 
     }
     #[Route('/bonjour/{prenom}', name:'app_bonjour')]
     public function bonjour(string $prenom) : Response{
