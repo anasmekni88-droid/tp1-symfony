@@ -15,27 +15,14 @@
                         <div class="mb-3">
                             {{ form_row(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
                         </div>
-
-                        {# --- NEW ROLES FIELD --- #}
-                        <div class="mb-3">
-                            {{ form_row(registrationForm.roles, {
-                                'label': 'Type de compte',
-                                'attr': {'class': 'form-select'} 
-                            }) }}
-                        </div>
-                        {# ----------------------- #}
-
                         <div class="mb-3">
                             {{ form_row(registrationForm.plainPassword, {
                                 'label': 'Mot de passe',
                                 'attr': {'class': 'form-control'}
                             }) }}
                         </div>
-
                         <div class="form-check mb-3">
-                            {# Note: For checkboxes, use form_widget + form_label to avoid Bootstrap layout issues with form_row #}
-                            {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
-                            {{ form_label(registrationForm.agreeTerms, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                            {{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100 py-2 mt-3">S'inscrire</button>
